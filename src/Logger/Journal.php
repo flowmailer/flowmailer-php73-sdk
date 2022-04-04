@@ -20,7 +20,7 @@ class Journal implements JournalInterface
 {
     /**
      * @readonly
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $journalLogger;
 

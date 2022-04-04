@@ -61,30 +61,30 @@ class Flowmailer extends Endpoints
     private $clientSecret;
 
     /**
-     * @var \Psr\Http\Client\ClientInterface|null
+     * @var ClientInterface|null
      */
     private $httpClient;
 
     /**
-     * @var \Psr\Http\Client\ClientInterface|null
+     * @var ClientInterface|null
      */
     private $authClient;
 
     /**
      * @readonly
-     * @var \Psr\Http\Message\RequestFactoryInterface
+     * @var RequestFactoryInterface
      */
     private $requestFactory;
 
     /**
      * @readonly
-     * @var \Psr\Http\Message\UriFactoryInterface
+     * @var UriFactoryInterface
      */
     private $uriFactory;
 
     /**
      * @readonly
-     * @var \Psr\Http\Message\StreamFactoryInterface
+     * @var StreamFactoryInterface
      */
     private $streamFactory;
 
