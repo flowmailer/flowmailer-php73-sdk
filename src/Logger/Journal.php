@@ -19,12 +19,14 @@ use Psr\Log\NullLogger;
 class Journal implements JournalInterface
 {
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @readonly
+     * @var \Psr\Log\LoggerInterface
      */
     private $journalLogger;
 
-    public function __construct(LoggerInterface $journalLogger = null)
-    {
+    public function __construct(
+        ?LoggerInterface $journalLogger = null
+    ) {
         $this->journalLogger = $journalLogger ?? new NullLogger();
     }
 

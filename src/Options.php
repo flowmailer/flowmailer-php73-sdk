@@ -17,13 +17,13 @@ final class Options
 {
     /**
      * @readonly
-     * @var SymfonyOptions
+     * @var mixed[]
      */
     private $options;
 
     /**
-     * @var OptionsResolver The options resolver
      * @readonly
+     * @var \Symfony\Component\OptionsResolver\OptionsResolver
      */
     private $resolver;
 
@@ -79,6 +79,7 @@ final class Options
         $resolver->setDefault('auth_base_url', function (SymfonyOptions $options) {
             return sprintf('%s://login.%s', $options['protocol'], $options['host']);
         });
+
         $resolver->setRequired([
             'account_id',
             'client_secret',
@@ -86,6 +87,7 @@ final class Options
         ]);
 
         $resolver->define('plugins')
+            ->default([])
             ->allowedTypes('array[]')
             ->allowedValues(static function (array &$elements): bool {
                 $defaults = [
@@ -105,7 +107,8 @@ final class Options
                 $elements = array_merge_recursive($defaults, $elements);
 
                 return true;
-            });
+            })
+        ;
 
         $resolver->setAllowedTypes('account_id', 'string');
         $resolver->setAllowedTypes('client_id', 'string');

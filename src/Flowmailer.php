@@ -26,12 +26,12 @@ use Http\Client\Common\PluginClient;
 use Http\Client\HttpAsyncClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
-use Http\Message\StreamFactory;
-use Http\Message\UriFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
@@ -78,12 +78,13 @@ class Flowmailer extends Endpoints
 
     /**
      * @readonly
-     * @var \Http\Message\UriFactory
+     * @var \Psr\Http\Message\UriFactoryInterface
      */
     private $uriFactory;
 
     /**
-     * @var \Http\Message\StreamFactory|null
+     * @readonly
+     * @var \Psr\Http\Message\StreamFactoryInterface
      */
     private $streamFactory;
 
@@ -122,8 +123,8 @@ class Flowmailer extends Endpoints
         ?ClientInterface $innerHttpClient = null,
         ?ClientInterface $innerAuthClient = null,
         RequestFactoryInterface $requestFactory = null,
-        UriFactory $uriFactory = null,
-        StreamFactory $streamFactory = null,
+        UriFactoryInterface $uriFactory = null,
+        StreamFactoryInterface $streamFactory = null,
         SerializerInterface $serializer = null
     ) {
         $this->options = $options;
