@@ -34,13 +34,13 @@ final class Message implements ModelInterface
      * Message events.
      *
      *  Ordered by received, new events first.
-     * @var \Flowmailer\API\Collection\MessageEventCollection|null
+     * @var MessageEventCollection|null
      */
     private $events;
 
     /**
      * Flow this message was processed in.
-     * @var \Flowmailer\API\Model\ObjectDescription|null
+     * @var ObjectDescription|null
      */
     private $flow;
 
@@ -52,7 +52,7 @@ final class Message implements ModelInterface
 
     /**
      * The address in ` From` email header.
-     * @var \Flowmailer\API\Model\Address|null
+     * @var Address|null
      */
     private $fromAddress;
 
@@ -60,7 +60,7 @@ final class Message implements ModelInterface
      * E-Mail headers of the submitted email message.
      *
      *  Only applicable when `messageType` = `EMAIL` and `addheaders` parameter is `true`
-     * @var \Flowmailer\API\Collection\HeaderCollection|null
+     * @var HeaderCollection|null
      */
     private $headersIn;
 
@@ -68,7 +68,7 @@ final class Message implements ModelInterface
      * Headers of the final e-mail.
      *
      *  Only applicable when `messageType` = `EMAIL` and `addheaders` parameter is `true`
-     * @var \Flowmailer\API\Collection\HeaderCollection|null
+     * @var HeaderCollection|null
      */
     private $headersOut;
 
@@ -116,7 +116,7 @@ final class Message implements ModelInterface
 
     /**
      * Source system that submitted this message.
-     * @var \Flowmailer\API\Model\ObjectDescription|null
+     * @var ObjectDescription|null
      */
     private $source;
 
@@ -149,7 +149,7 @@ final class Message implements ModelInterface
 
     /**
      * The recipients in the ` To` email header.
-     * @var \Flowmailer\API\Collection\AddressCollection|null
+     * @var AddressCollection|null
      */
     private $toAddressList;
 

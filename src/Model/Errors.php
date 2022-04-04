@@ -18,7 +18,7 @@ final class Errors implements ModelInterface
 {
     /**
      * List of errors.
-     * @var \Flowmailer\API\Collection\ErrorCollection|null
+     * @var ErrorCollection|null
      */
     private $allErrors;
 

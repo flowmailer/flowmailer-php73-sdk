@@ -23,7 +23,7 @@ final class SubmitMessage implements ModelInterface
      * Attachments.
      *
      *  Only applicable when `messageType` = `EMAIL`
-     * @var \Flowmailer\API\Collection\AttachmentCollection|null
+     * @var AttachmentCollection|null
      */
     private $attachments;
 
@@ -85,7 +85,7 @@ final class SubmitMessage implements ModelInterface
 
     /**
      * Email headers.
-     * @var \Flowmailer\API\Collection\HeaderCollection|null
+     * @var HeaderCollection|null
      */
     private $headers;
 
