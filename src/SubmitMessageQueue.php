@@ -24,7 +24,7 @@ class SubmitMessageQueue
 {
     /**
      * @readonly
-     * @var \Flowmailer\API\Flowmailer
+     * @var Flowmailer
      */
     private $api;
     /**
