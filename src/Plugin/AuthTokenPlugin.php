@@ -33,12 +33,12 @@ class AuthTokenPlugin implements Plugin
     private $cache;
     /**
      * @readonly
-     * @var \Flowmailer\API\Flowmailer
+     * @var Flowmailer
      */
     private $client;
     /**
      * @readonly
-     * @var \Flowmailer\API\Options
+     * @var Options
      */
     private $options;
     /**
