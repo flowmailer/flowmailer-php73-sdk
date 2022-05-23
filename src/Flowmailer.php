@@ -34,6 +34,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -133,6 +134,8 @@ class Flowmailer extends Endpoints
         $this->cache = $cache;
         $this->innerHttpClient = $innerHttpClient;
         $this->innerAuthClient = $innerAuthClient;
+        $this->logger = $this->logger ?? new NullLogger();
+
         $this->accountId    = $options->getAccountId();
         $this->clientId     = $options->getClientId();
         $this->clientSecret = $options->getClientSecret();
@@ -199,7 +202,7 @@ class Flowmailer extends Endpoints
 
     public function setLogger(LoggerInterface $logger = null): self
     {
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
 
         return $this;
     }
