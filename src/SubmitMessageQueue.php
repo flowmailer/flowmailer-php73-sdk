@@ -24,7 +24,7 @@ class SubmitMessageQueue
 {
     /**
      * @readonly
-     * @var Flowmailer
+     * @var FlowmailerInterface
      */
     private $api;
     /**
@@ -37,14 +37,14 @@ class SubmitMessageQueue
      * @var string
      */
     private $topic = 'flowmailer_messages';
-    public function __construct(Flowmailer $api, SimpleClient $client, string $topic = 'flowmailer_messages')
+    public function __construct(FlowmailerInterface $api, SimpleClient $client, string $topic = 'flowmailer_messages')
     {
         $this->api = $api;
         $this->client = $client;
         $this->topic = $topic;
     }
 
-    public static function init(Flowmailer $api, $queueClientConfig, $topic = 'flowmailer_messages', ?LoggerInterface $logger = null)
+    public static function init(FlowmailerInterface $api, $queueClientConfig, $topic = 'flowmailer_messages', ?LoggerInterface $logger = null)
     {
         if (InstalledVersions::isInstalled('enqueue/simple-client') === false) {
             throw new \Exception('To be able to queue messages, please install enqueue/simple-client and a suitable provider. Please see the Flowmailer docs.');
