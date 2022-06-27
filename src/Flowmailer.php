@@ -229,7 +229,7 @@ class Flowmailer extends Endpoints implements FlowmailerInterface
         return $this->logger;
     }
 
-    protected function getOptions(): Options
+    protected function getOptions(): OptionsInterface
     {
         return $this->options;
     }
