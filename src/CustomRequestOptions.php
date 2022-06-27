@@ -15,6 +15,12 @@ final class CustomRequestOptions
 {
     /**
      * @readonly
+     * @var mixed[]
+     */
+    private $options;
+
+    /**
+     * @readonly
      * @var OptionsResolver
      */
     private $resolver;

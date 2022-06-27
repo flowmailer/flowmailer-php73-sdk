@@ -29,7 +29,7 @@ class SubmitMessageQueue
     private $api;
     /**
      * @readonly
-     * @var \Enqueue\SimpleClient\SimpleClient
+     * @var SimpleClient
      */
     private $client;
     /**
