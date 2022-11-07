@@ -75,6 +75,9 @@ final class CustomRequestOptions
         $resolver->setDefault('path', []);
         $resolver->setAllowedTypes('path', ['array']);
 
+        $resolver->setDefault('path', []);
+        $resolver->setAllowedTypes('path', ['array']);
+
         $resolver->setDefault('matrices', []);
         $resolver->setAllowedTypes('matrices', ['array']);
 
