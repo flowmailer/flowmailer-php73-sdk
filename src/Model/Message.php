@@ -20,13 +20,13 @@ final class Message implements ModelInterface
 {
     /**
      * The time flowmailer was done processing this message.
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $backendDone;
 
     /**
      * The time flowmailer started processing this message.
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $backendStart;
 
@@ -136,7 +136,7 @@ final class Message implements ModelInterface
 
     /**
      * The time this message was submitted to flowmailer.
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $submitted;
 
@@ -159,26 +159,26 @@ final class Message implements ModelInterface
      */
     private $transactionId;
 
-    public function setBackendDone(?\DateTime $backendDone = null): self
+    public function setBackendDone(?\DateTimeInterface $backendDone = null): self
     {
         $this->backendDone = $backendDone;
 
         return $this;
     }
 
-    public function getBackendDone(): ?\DateTime
+    public function getBackendDone(): ?\DateTimeInterface
     {
         return $this->backendDone;
     }
 
-    public function setBackendStart(?\DateTime $backendStart = null): self
+    public function setBackendStart(?\DateTimeInterface $backendStart = null): self
     {
         $this->backendStart = $backendStart;
 
         return $this;
     }
 
-    public function getBackendStart(): ?\DateTime
+    public function getBackendStart(): ?\DateTimeInterface
     {
         return $this->backendStart;
     }
@@ -375,14 +375,14 @@ final class Message implements ModelInterface
         return $this->subject;
     }
 
-    public function setSubmitted(?\DateTime $submitted = null): self
+    public function setSubmitted(?\DateTimeInterface $submitted = null): self
     {
         $this->submitted = $submitted;
 
         return $this;
     }
 
-    public function getSubmitted(): ?\DateTime
+    public function getSubmitted(): ?\DateTimeInterface
     {
         return $this->submitted;
     }
