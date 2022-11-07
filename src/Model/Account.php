@@ -15,6 +15,12 @@ namespace Flowmailer\API\Model;
 final class Account implements ModelInterface
 {
     /**
+     * The account ID.
+     * @var string|null
+     */
+    private $id;
+
+    /**
      * The account type.
      * @var string
      */
@@ -43,6 +49,18 @@ final class Account implements ModelInterface
      * @var \DateTimeInterface|null
      */
     private $accountEnds;
+
+    public function setId(?string $id = null): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
     public function setType(string $type): self
     {
