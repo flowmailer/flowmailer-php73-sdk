@@ -40,7 +40,7 @@ final class Account implements ModelInterface
 
     /**
      * The end date for the account.
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $accountEnds;
 
@@ -92,14 +92,14 @@ final class Account implements ModelInterface
         return $this->timeRegion;
     }
 
-    public function setAccountEnds(?\DateTime $accountEnds = null): self
+    public function setAccountEnds(?\DateTimeInterface $accountEnds = null): self
     {
         $this->accountEnds = $accountEnds;
 
         return $this;
     }
 
-    public function getAccountEnds(): ?\DateTime
+    public function getAccountEnds(): ?\DateTimeInterface
     {
         return $this->accountEnds;
     }
