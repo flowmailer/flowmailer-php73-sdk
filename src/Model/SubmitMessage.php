@@ -120,7 +120,7 @@ final class SubmitMessage implements ModelInterface
     private $recipientAddress;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $scheduleAt;
 
@@ -307,14 +307,14 @@ final class SubmitMessage implements ModelInterface
         return $this->recipientAddress;
     }
 
-    public function setScheduleAt(?\DateTime $scheduleAt = null): self
+    public function setScheduleAt(?\DateTimeInterface $scheduleAt = null): self
     {
         $this->scheduleAt = $scheduleAt;
 
         return $this;
     }
 
-    public function getScheduleAt(): ?\DateTime
+    public function getScheduleAt(): ?\DateTimeInterface
     {
         return $this->scheduleAt;
     }
