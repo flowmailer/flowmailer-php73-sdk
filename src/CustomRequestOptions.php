@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Flowmailer\API;
 
+use Doctrine\Common\Collections\Collection;
+use Flowmailer\API\Model\ModelInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CustomRequestOptions
@@ -37,7 +39,10 @@ final class CustomRequestOptions
         $this->options = $this->resolver->resolve($options);
     }
 
-    public function getBody(): ?string
+    /**
+     * @return null|string|ModelInterface|Collection
+     */
+    public function getBody()
     {
         return $this->options['body'];
     }
@@ -65,7 +70,10 @@ final class CustomRequestOptions
     private function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('body', null);
-        $resolver->setAllowedTypes('body', ['null', 'string']);
+        $resolver->setAllowedTypes('body', ['null', 'string', ModelInterface::class, Collection::class]);
+
+        $resolver->setDefault('path', []);
+        $resolver->setAllowedTypes('path', ['array']);
 
         $resolver->setDefault('path', []);
         $resolver->setAllowedTypes('path', ['array']);
