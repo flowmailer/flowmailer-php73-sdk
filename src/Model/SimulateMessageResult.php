@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Flowmailer\API\Model;
 
 use Flowmailer\API\Collection\AttachmentCollection;
+use Flowmailer\API\Enum\MessageType;
 
 /**
  * SimulateMessageResult.
@@ -42,9 +43,9 @@ final class SimulateMessageResult implements ModelInterface
 
     /**
      * `EMAIL`, `SMS` or `LETTER`.
-     * @var string|null
+     * @var string|MessageType|null
      */
-    private $messageType;
+    private $messageType = null;
 
     /**
      * Archived message subject.
@@ -106,14 +107,20 @@ final class SimulateMessageResult implements ModelInterface
         return $this->html;
     }
 
-    public function setMessageType(?string $messageType = null): self
+    /**
+     * @param string|MessageType|null $messageType
+     */
+    public function setMessageType($messageType = null): self
     {
         $this->messageType = $messageType;
 
         return $this;
     }
 
-    public function getMessageType(): ?string
+    /**
+     * @return string|MessageType|null
+     */
+    public function getMessageType()
     {
         return $this->messageType;
     }
