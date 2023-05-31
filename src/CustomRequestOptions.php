@@ -40,7 +40,7 @@ final class CustomRequestOptions
     }
 
     /**
-     * @return null|string|ModelInterface|Collection
+     * @return null|string|mixed[]|ModelInterface|Collection
      */
     public function getBody()
     {
@@ -70,7 +70,7 @@ final class CustomRequestOptions
     private function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('body', null);
-        $resolver->setAllowedTypes('body', ['null', 'string', ModelInterface::class, Collection::class]);
+        $resolver->setAllowedTypes('body', ['null', 'string', 'array', ModelInterface::class, Collection::class]);
 
         $resolver->setDefault('path', []);
         $resolver->setAllowedTypes('path', ['array']);
