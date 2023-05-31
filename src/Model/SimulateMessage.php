@@ -11,6 +11,8 @@ namespace Flowmailer\API\Model;
 
 use Flowmailer\API\Collection\AttachmentCollection;
 use Flowmailer\API\Collection\HeaderCollection;
+use Flowmailer\API\Enum\DeliveryNotificationType;
+use Flowmailer\API\Enum\MessageType;
 
 /**
  * SimulateMessage.
@@ -37,9 +39,9 @@ final class SimulateMessage implements ModelInterface
      *  Defaults to `NONE` for `SMS`
      *
      *  Only applicable when `messageType` = `SMS`
-     * @var string|null
+     * @var string|DeliveryNotificationType|null
      */
-    private $deliveryNotificationType;
+    private $deliveryNotificationType = null;
 
     /**
      * Freely configurable value that can be used to select a flow or one of its variants.
@@ -97,7 +99,7 @@ final class SimulateMessage implements ModelInterface
 
     /**
      * `EMAIL`, `SMS` or `LETTER`.
-     * @var string
+     * @var string|MessageType
      */
     private $messageType;
 
@@ -126,12 +128,12 @@ final class SimulateMessage implements ModelInterface
      * Sender email address or phone number.
      *
      *  For email messages this cannot contain a display name.
-     * @var string|null
+     * @var string
      */
     private $senderAddress;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $sourceId;
 
@@ -178,14 +180,20 @@ final class SimulateMessage implements ModelInterface
         return $this->data;
     }
 
-    public function setDeliveryNotificationType(?string $deliveryNotificationType = null): self
+    /**
+     * @param string|DeliveryNotificationType|null $deliveryNotificationType
+     */
+    public function setDeliveryNotificationType($deliveryNotificationType = null): self
     {
         $this->deliveryNotificationType = $deliveryNotificationType;
 
         return $this;
     }
 
-    public function getDeliveryNotificationType(): ?string
+    /**
+     * @return string|DeliveryNotificationType|null
+     */
+    public function getDeliveryNotificationType()
     {
         return $this->deliveryNotificationType;
     }
@@ -274,14 +282,20 @@ final class SimulateMessage implements ModelInterface
         return $this->html;
     }
 
-    public function setMessageType(string $messageType): self
+    /**
+     * @param string|MessageType $messageType
+     */
+    public function setMessageType($messageType): self
     {
         $this->messageType = $messageType;
 
         return $this;
     }
 
-    public function getMessageType(): string
+    /**
+     * @return string|MessageType
+     */
+    public function getMessageType()
     {
         return $this->messageType;
     }
@@ -322,26 +336,26 @@ final class SimulateMessage implements ModelInterface
         return $this->scheduleAt;
     }
 
-    public function setSenderAddress(?string $senderAddress = null): self
+    public function setSenderAddress(string $senderAddress): self
     {
         $this->senderAddress = $senderAddress;
 
         return $this;
     }
 
-    public function getSenderAddress(): ?string
+    public function getSenderAddress(): string
     {
         return $this->senderAddress;
     }
 
-    public function setSourceId(?string $sourceId = null): self
+    public function setSourceId(string $sourceId): self
     {
         $this->sourceId = $sourceId;
 
         return $this;
     }
 
-    public function getSourceId(): ?string
+    public function getSourceId(): string
     {
         return $this->sourceId;
     }

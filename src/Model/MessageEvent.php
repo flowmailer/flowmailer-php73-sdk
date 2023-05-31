@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Flowmailer\API\Model;
 
+use Flowmailer\API\Enum\EventType;
+
 /**
  * MessageEvent.
  *
@@ -29,10 +31,9 @@ final class MessageEvent implements ModelInterface
 
     /**
      * Event data.
-     *
-     * @var |null
+     * @var mixed[]|null
      */
-    private $extraData = null;
+    private $extraData;
 
     /**
      * Message event ID.
@@ -111,23 +112,22 @@ final class MessageEvent implements ModelInterface
 
     /**
      * Bounce sub type.
-     *
-     * @var |null
+     * @var string|null
      */
-    private $subType = null;
+    private $subType;
 
     /**
      * Custom event type.
      *
-     * @var |null
+     * @var null
      */
     private $tag = null;
 
     /**
      * Event type, must be `CUSTOM`.
-     * @var string
+     * @var string|EventType
      */
-    private $type;
+    private $type = EventType::CUSTOM;
 
     /**
      * @var string|null
@@ -178,14 +178,14 @@ final class MessageEvent implements ModelInterface
         return $this->deviceCategory;
     }
 
-    public function setExtraData($extraData = null): self
+    public function setExtraData(?array $extraData = null): self
     {
         $this->extraData = $extraData;
 
         return $this;
     }
 
-    public function getExtraData()
+    public function getExtraData(): ?array
     {
         return $this->extraData;
     }
@@ -346,14 +346,14 @@ final class MessageEvent implements ModelInterface
         return $this->snippet;
     }
 
-    public function setSubType($subType = null): self
+    public function setSubType(?string $subType = null): self
     {
         $this->subType = $subType;
 
         return $this;
     }
 
-    public function getSubType()
+    public function getSubType(): ?string
     {
         return $this->subType;
     }
@@ -370,14 +370,20 @@ final class MessageEvent implements ModelInterface
         return $this->tag;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param string|EventType $type
+     */
+    public function setType($type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getType(): string
+    /**
+     * @return string|EventType
+     */
+    public function getType()
     {
         return $this->type;
     }
