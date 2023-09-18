@@ -14,7 +14,7 @@ use Flowmailer\API\Collection\FlowConditionCollection;
 /**
  * FlowRuleItem.
  */
-final class FlowRuleItem implements ModelInterface
+class FlowRuleItem implements ModelInterface
 {
     /**
      * @var FlowConditionCollection|null
