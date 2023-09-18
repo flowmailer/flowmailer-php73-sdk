@@ -12,7 +12,7 @@ namespace Flowmailer\API\Model;
 /**
  * Sample.
  */
-final class Sample implements ModelInterface
+class Sample implements ModelInterface
 {
     /**
      * @var \DateTimeInterface|null

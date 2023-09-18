@@ -14,7 +14,7 @@ use Flowmailer\API\Enum\MessageType;
 /**
  * SampleMessage.
  */
-final class SampleMessage implements ModelInterface
+class SampleMessage implements ModelInterface
 {
     /**
      * @var \DateTimeInterface|null
