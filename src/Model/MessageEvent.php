@@ -121,7 +121,7 @@ class MessageEvent implements ModelInterface
      *
      * @var null
      */
-    private $tag = null;
+    private $tag;
 
     /**
      * Event type, must be `CUSTOM`.
