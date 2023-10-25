@@ -161,7 +161,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function createRequestForGetApiCredentials(?int $sourceId): RequestInterface
+    public function createRequestForGetApiCredentials(?int $sourceId = null): RequestInterface
     {
         $matrices = [
             'source_id' => $sourceId,
@@ -173,7 +173,7 @@ abstract class Endpoints
     /**
      * @codeCoverageIgnore
      */
-    public function getApiCredentials(?int $sourceId): CredentialsCollection
+    public function getApiCredentials(?int $sourceId = null): CredentialsCollection
     {
         $request  = $this->createRequestForGetApiCredentials($sourceId);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
@@ -498,8 +498,8 @@ abstract class Endpoints
      */
     public function createRequestForGetFilters(
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder
+        ?DateRange $daterange = null,
+        ?string $sortorder = null
     ): RequestInterface {
         $matrices = [
             'daterange' => $daterange,
@@ -519,8 +519,11 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getFilters(ReferenceRange $range, ?DateRange $daterange, ?string $sortorder): FilterCollection
-    {
+    public function getFilters(
+        ReferenceRange $range,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null
+    ): FilterCollection {
         $request  = $this->createRequestForGetFilters($range, $daterange, $sortorder);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
         $items    = $this->serializer->deserialize($response, FilterCollection::class, 'json');
@@ -854,7 +857,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function createRequestForGetFlowStats($flowId, DateRange $daterange, ?int $interval): RequestInterface
+    public function createRequestForGetFlowStats($flowId, DateRange $daterange, ?int $interval = null): RequestInterface
     {
         $matrices = [
             'daterange' => $daterange,
@@ -871,7 +874,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getFlowStats($flowId, DateRange $daterange, ?int $interval): DataSets
+    public function getFlowStats($flowId, DateRange $daterange, ?int $interval = null): DataSets
     {
         $request  = $this->createRequestForGetFlowStats($flowId, $daterange, $interval);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
@@ -891,18 +894,22 @@ abstract class Endpoints
      */
     public function createRequestForGetMessageEvents(
         ReferenceRange $range,
-        ?array $flowIds,
-        ?array $sourceIds,
-        ?string $sortorder,
-        ?bool $addmessagetags = false
+        ?array $flowIds = null,
+        ?array $sourceIds = null,
+        ?string $sortorder = null,
+        ?bool $addmessagetags = false,
+        ?DateRange $daterange = null,
+        ?DateRange $receivedrange = null
     ): RequestInterface {
         $matrices = [
-            'flow_ids'   => $flowIds,
-            'source_ids' => $sourceIds,
+            'flow_ids'      => $flowIds,
+            'source_ids'    => $sourceIds,
+            'daterange'     => $daterange,
+            'receivedrange' => $receivedrange,
         ];
         $query = [
-            'addmessagetags' => $addmessagetags,
             'sortorder'      => $sortorder,
+            'addmessagetags' => $addmessagetags,
         ];
         $headers = [
             'Range' => $range,
@@ -920,12 +927,14 @@ abstract class Endpoints
      */
     public function getMessageEvents(
         ReferenceRange $range,
-        ?array $flowIds,
-        ?array $sourceIds,
-        ?string $sortorder,
-        ?bool $addmessagetags = false
+        ?array $flowIds = null,
+        ?array $sourceIds = null,
+        ?string $sortorder = null,
+        ?bool $addmessagetags = false,
+        ?DateRange $daterange = null,
+        ?DateRange $receivedrange = null
     ): MessageEventCollection {
-        $request  = $this->createRequestForGetMessageEvents($range, $flowIds, $sourceIds, $sortorder, $addmessagetags);
+        $request  = $this->createRequestForGetMessageEvents($range, $flowIds, $sourceIds, $sortorder, $addmessagetags, $daterange, $receivedrange);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
         $items    = $this->serializer->deserialize($response, MessageEventCollection::class, 'json');
         if ($response->getMeta('next-range') instanceof ReferenceRange) {
@@ -946,7 +955,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function createRequestForGetMessageHolds(ItemsRange $range, ?DateRange $daterange): RequestInterface
+    public function createRequestForGetMessageHolds(ItemsRange $range, ?DateRange $daterange = null): RequestInterface
     {
         $matrices = [
             'daterange' => $daterange,
@@ -963,7 +972,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getMessageHolds(ItemsRange $range, ?DateRange $daterange): MessageHoldCollection
+    public function getMessageHolds(ItemsRange $range, ?DateRange $daterange = null): MessageHoldCollection
     {
         $request  = $this->createRequestForGetMessageHolds($range, $daterange);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
@@ -1008,32 +1017,35 @@ abstract class Endpoints
      *
      * @param ReferenceRange $range      Limits the returned list
      * @param array          $flowIds    Filter results on flow ID
+     * @param string         $sortfield  Sort by INSERTED or SUBMITTED (default INSERTED)
      * @param bool           $addevents  Whether to add message events
      * @param bool           $addheaders Whether to add e-mail headers
-     * @param string         $sortfield  Sort by INSERTED or SUBMITTED (default INSERTED)
+     * @param DateRange      $daterange  Date range the message was submitted in
      *
      * @codeCoverageIgnore
      */
     public function createRequestForGetMessages(
         ReferenceRange $range,
-        ?array $flowIds,
-        ?string $sortfield,
-        ?string $sortorder,
+        ?array $flowIds = null,
+        ?string $sortfield = null,
+        ?string $sortorder = null,
         ?bool $addevents = false,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
-        ?bool $addtags = false
+        ?bool $addtags = false,
+        ?DateRange $daterange = null
     ): RequestInterface {
         $matrices = [
-            'flow_ids' => $flowIds,
+            'flow_ids'  => $flowIds,
+            'daterange' => $daterange,
         ];
         $query = [
+            'sortfield'     => $sortfield,
+            'sortorder'     => $sortorder,
             'addevents'     => $addevents,
             'addheaders'    => $addheaders,
             'addonlinelink' => $addonlinelink,
             'addtags'       => $addtags,
-            'sortfield'     => $sortfield,
-            'sortorder'     => $sortorder,
         ];
         $headers = [
             'Range' => $range,
@@ -1051,15 +1063,16 @@ abstract class Endpoints
      */
     public function getMessages(
         ReferenceRange $range,
-        ?array $flowIds,
-        ?string $sortfield,
-        ?string $sortorder,
+        ?array $flowIds = null,
+        ?string $sortfield = null,
+        ?string $sortorder = null,
         ?bool $addevents = false,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
-        ?bool $addtags = false
+        ?bool $addtags = false,
+        ?DateRange $daterange = null
     ): MessageCollection {
-        $request  = $this->createRequestForGetMessages($range, $flowIds, $sortfield, $sortorder, $addevents, $addheaders, $addonlinelink, $addtags);
+        $request  = $this->createRequestForGetMessages($range, $flowIds, $sortfield, $sortorder, $addevents, $addheaders, $addonlinelink, $addtags, $daterange);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
         $items    = $this->serializer->deserialize($response, MessageCollection::class, 'json');
         if ($response->getMeta('next-range') instanceof ReferenceRange) {
@@ -1277,8 +1290,8 @@ abstract class Endpoints
      */
     public function createRequestForGetMessageStats(
         DateRange $daterange,
-        ?array $flowIds,
-        ?int $interval
+        ?array $flowIds = null,
+        ?int $interval = null
     ): RequestInterface {
         $matrices = [
             'daterange' => $daterange,
@@ -1298,7 +1311,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getMessageStats(DateRange $daterange, ?array $flowIds, ?int $interval): DataSets
+    public function getMessageStats(DateRange $daterange, ?array $flowIds = null, ?int $interval = null): DataSets
     {
         $request  = $this->createRequestForGetMessageStats($daterange, $flowIds, $interval);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
@@ -1309,13 +1322,18 @@ abstract class Endpoints
     /**
      * Create the RequestInterface for getRecipient.
      *
-     * @param $recipient Recipient email address or phone number
+     * @param           $recipient Recipient email address or phone number
+     * @param DateRange $daterange Specifies the date range for message statistics
      *
      * @codeCoverageIgnore
      */
-    public function createRequestForGetRecipient($recipient): RequestInterface
+    public function createRequestForGetRecipient($recipient, ?DateRange $daterange = null): RequestInterface
     {
-        return $this->createRequest('GET', sprintf('/%1$s/recipient/%2$s', $this->getOptions()->getAccountId(), $recipient), null, [], [], []);
+        $matrices = [
+            'daterange' => $daterange,
+        ];
+
+        return $this->createRequest('GET', sprintf('/%1$s/recipient/%2$s', $this->getOptions()->getAccountId(), $recipient), null, $matrices, [], []);
     }
 
     /**
@@ -1325,9 +1343,9 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getRecipient($recipient): Recipient
+    public function getRecipient($recipient, ?DateRange $daterange = null): Recipient
     {
-        $request  = $this->createRequestForGetRecipient($recipient);
+        $request  = $this->createRequestForGetRecipient($recipient, $daterange);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
 
         return $this->serializer->deserialize($response, Recipient::class, 'json');
@@ -1347,8 +1365,8 @@ abstract class Endpoints
     public function createRequestForGetRecipientMessages(
         $recipient,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -1357,10 +1375,10 @@ abstract class Endpoints
             'daterange' => $daterange,
         ];
         $query = [
+            'sortorder'     => $sortorder,
             'addheaders'    => $addheaders,
             'addonlinelink' => $addonlinelink,
             'addtags'       => $addtags,
-            'sortorder'     => $sortorder,
         ];
         $headers = [
             'Range' => $range,
@@ -1377,8 +1395,8 @@ abstract class Endpoints
     public function getRecipientMessages(
         $recipient,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -1431,8 +1449,8 @@ abstract class Endpoints
     public function createRequestForGetSenderMessages(
         $sender,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -1441,10 +1459,10 @@ abstract class Endpoints
             'daterange' => $daterange,
         ];
         $query = [
+            'sortorder'     => $sortorder,
             'addheaders'    => $addheaders,
             'addonlinelink' => $addonlinelink,
             'addtags'       => $addtags,
-            'sortorder'     => $sortorder,
         ];
         $headers = [
             'Range' => $range,
@@ -1461,8 +1479,8 @@ abstract class Endpoints
     public function getSenderMessages(
         $sender,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -1856,8 +1874,11 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function createRequestForGetSourceStats($sourceId, DateRange $daterange, ?int $interval): RequestInterface
-    {
+    public function createRequestForGetSourceStats(
+        $sourceId,
+        DateRange $daterange,
+        ?int $interval = null
+    ): RequestInterface {
         $matrices = [
             'daterange' => $daterange,
             'interval'  => $interval,
@@ -1873,7 +1894,7 @@ abstract class Endpoints
      *
      * @codeCoverageIgnore
      */
-    public function getSourceStats($sourceId, DateRange $daterange, ?int $interval): DataSets
+    public function getSourceStats($sourceId, DateRange $daterange, ?int $interval = null): DataSets
     {
         $request  = $this->createRequestForGetSourceStats($sourceId, $daterange, $interval);
         $response = $this->handleResponse($this->getResponse($request), (string) $request->getBody(), $request->getMethod());
@@ -2022,8 +2043,8 @@ abstract class Endpoints
     public function createRequestForGetTagMessages(
         $tag,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -2032,10 +2053,10 @@ abstract class Endpoints
             'daterange' => $daterange,
         ];
         $query = [
+            'sortorder'     => $sortorder,
             'addheaders'    => $addheaders,
             'addonlinelink' => $addonlinelink,
             'addtags'       => $addtags,
-            'sortorder'     => $sortorder,
         ];
         $headers = [
             'Range' => $range,
@@ -2052,8 +2073,8 @@ abstract class Endpoints
     public function getTagMessages(
         $tag,
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?string $sortorder = null,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
         ?bool $addtags = false
@@ -2208,9 +2229,9 @@ abstract class Endpoints
      */
     public function createRequestForGetUndeliveredMessages(
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?DateRange $receivedrange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?DateRange $receivedrange = null,
+        ?string $sortorder = null,
         ?bool $addevents = false,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
@@ -2221,11 +2242,11 @@ abstract class Endpoints
             'receivedrange' => $receivedrange,
         ];
         $query = [
+            'sortorder'     => $sortorder,
             'addevents'     => $addevents,
             'addheaders'    => $addheaders,
             'addonlinelink' => $addonlinelink,
             'addtags'       => $addtags,
-            'sortorder'     => $sortorder,
         ];
         $headers = [
             'Range' => $range,
@@ -2241,9 +2262,9 @@ abstract class Endpoints
      */
     public function getUndeliveredMessages(
         ReferenceRange $range,
-        ?DateRange $daterange,
-        ?DateRange $receivedrange,
-        ?string $sortorder,
+        ?DateRange $daterange = null,
+        ?DateRange $receivedrange = null,
+        ?string $sortorder = null,
         ?bool $addevents = false,
         ?bool $addheaders = false,
         ?bool $addonlinelink = false,
