@@ -30,7 +30,7 @@ class Template implements ModelInterface
     private $contentId;
     /**
      * Template content.
-     * @var string
+     * @var string|null
      */
     private $data;
     /**
@@ -103,13 +103,13 @@ class Template implements ModelInterface
     {
         return $this->contentId;
     }
-    public function setData(string $data): self
+    public function setData(?string $data = null): self
     {
         $this->data = $data;
 
         return $this;
     }
-    public function getData(): string
+    public function getData(): ?string
     {
         return $this->data;
     }
