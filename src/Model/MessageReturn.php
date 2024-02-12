@@ -29,11 +29,7 @@ class MessageReturn implements ModelInterface
      */
     private $deviceCategory;
 
-    /**
-     * Event data.
-     *
-     * @var null
-     */
+    /** Event data */
     private $extraData;
 
     /**
@@ -42,11 +38,7 @@ class MessageReturn implements ModelInterface
      */
     private $id;
 
-    /**
-     * Database insert date.
-     *
-     * @var null
-     */
+    /** Database insert date */
     private $inserted;
 
     /**
@@ -111,24 +103,12 @@ class MessageReturn implements ModelInterface
      * @var string|null
      */
     private $snippet;
-
-    /**
-     * @var null
-     */
     private $sourceMta;
 
-    /**
-     * Bounce sub type.
-     *
-     * @var null
-     */
+    /** Bounce sub type */
     private $subType;
 
-    /**
-     * Custom event type.
-     *
-     * @var null
-     */
+    /** Custom event type */
     private $tag;
 
     /**
