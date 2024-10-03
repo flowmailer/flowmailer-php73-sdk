@@ -27,7 +27,7 @@ class SampleMessage implements ModelInterface
     private $description;
 
     /**
-     * @var \stdClass|null
+     * @var mixed[]|null
      */
     private $extraData;
 
@@ -90,14 +90,14 @@ class SampleMessage implements ModelInterface
         return $this->description;
     }
 
-    public function setExtraData(?\stdClass $extraData = null): self
+    public function setExtraData(?array $extraData = null): self
     {
         $this->extraData = $extraData;
 
         return $this;
     }
 
-    public function getExtraData(): ?\stdClass
+    public function getExtraData(): ?array
     {
         return $this->extraData;
     }
