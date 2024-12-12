@@ -18,19 +18,11 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 class AuthTokenPlugin implements Plugin
 {
-    /**
-     * @var int
-     */
-    private $retriesLeft = 3;
-
-    /**
-     * @readonly
-     * @var CacheInterface
-     */
-    private $cache;
     /**
      * @readonly
      * @var FlowmailerInterface
@@ -46,6 +38,16 @@ class AuthTokenPlugin implements Plugin
      * @var int
      */
     private $maxRetries = 3;
+    /**
+     * @var int
+     */
+    private $retriesLeft = 3;
+
+    /**
+     * @readonly
+     * @var CacheInterface
+     */
+    private $cache;
 
     public function __construct(
         FlowmailerInterface $client,
@@ -57,7 +59,7 @@ class AuthTokenPlugin implements Plugin
         $this->options = $options;
         $this->maxRetries = $maxRetries;
         $this->retriesLeft = $maxRetries;
-        $this->cache       = $cache ?? new ArrayCachePool();
+        $this->cache       = $cache ?? new Psr16Cache(new ArrayAdapter());
     }
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
