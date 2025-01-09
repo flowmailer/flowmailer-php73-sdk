@@ -24,9 +24,8 @@ class Journal implements JournalInterface
      */
     private $journalLogger;
 
-    public function __construct(
-        ?LoggerInterface $journalLogger = null
-    ) {
+    public function __construct(?LoggerInterface $journalLogger = null)
+    {
         $this->journalLogger = $journalLogger ?? new NullLogger();
     }
 

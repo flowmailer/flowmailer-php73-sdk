@@ -40,7 +40,7 @@ class CustomRequestOptions
     }
 
     /**
-     * @return null|string|mixed[]|ModelInterface|Collection
+     * @return string|mixed[]|ModelInterface|Collection|null
      */
     public function getBody()
     {

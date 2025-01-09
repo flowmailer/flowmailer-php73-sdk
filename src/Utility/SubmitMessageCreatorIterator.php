@@ -20,10 +20,8 @@ class SubmitMessageCreatorIterator implements \Iterator
     private $innerIterator;
     private $callback;
 
-    public function __construct(
-        \Iterator $innerIterator,
-        callable $callback
-    ) {
+    public function __construct(\Iterator $innerIterator, callable $callback)
+    {
         $this->innerIterator = $innerIterator;
         $this->callback      = $callback;
     }

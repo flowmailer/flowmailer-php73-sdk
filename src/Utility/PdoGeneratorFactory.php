@@ -20,7 +20,6 @@ class PdoGeneratorFactory
     {
         $this->pdo = $pdo;
     }
-
     public function createGenerator($select): \Generator
     {
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

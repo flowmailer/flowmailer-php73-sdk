@@ -130,32 +130,20 @@ class Flowmailer extends Endpoints implements FlowmailerInterface
      */
     private $plugins;
 
-    public function __construct(
-        OptionsInterface $options,
-        ?LoggerInterface $logger = null,
-        ?CacheInterface $cache = null,
-        ?ClientInterface $innerHttpClient = null,
-        ?ClientInterface $innerAuthClient = null,
-        ?RequestFactoryInterface $requestFactory = null,
-        ?UriFactoryInterface $uriFactory = null,
-        ?StreamFactoryInterface $streamFactory = null,
-        ?SerializerInterface $serializer = null
-    ) {
+    public function __construct(OptionsInterface $options, ?LoggerInterface $logger = null, ?CacheInterface $cache = null, ?ClientInterface $innerHttpClient = null, ?ClientInterface $innerAuthClient = null, ?RequestFactoryInterface $requestFactory = null, ?UriFactoryInterface $uriFactory = null, ?StreamFactoryInterface $streamFactory = null, ?SerializerInterface $serializer = null)
+    {
         $this->options = $options;
         $this->logger = $logger;
         $this->cache = $cache;
         $this->innerHttpClient = $innerHttpClient;
         $this->innerAuthClient = $innerAuthClient;
         $this->logger = $this->logger ?? new NullLogger();
-
         $this->accountId    = $options->getAccountId();
         $this->clientId     = $options->getClientId();
         $this->clientSecret = $options->getClientSecret();
-
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->uriFactory     = $uriFactory ?? Psr17FactoryDiscovery::findUriFactory();
         $this->streamFactory  = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
-
         parent::__construct($serializer ?? SerializerFactory::create());
     }
 

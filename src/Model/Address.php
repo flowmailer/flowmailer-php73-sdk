@@ -33,7 +33,6 @@ class Address implements ModelInterface
          */
         $this->name = $name;
     }
-
     public function setAddress(?string $address = null): self
     {
         $this->address = $address;

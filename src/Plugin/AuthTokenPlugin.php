@@ -49,12 +49,8 @@ class AuthTokenPlugin implements Plugin
      */
     private $cache;
 
-    public function __construct(
-        FlowmailerInterface $client,
-        OptionsInterface $options,
-        ?CacheInterface $cache = null,
-        int $maxRetries = 3
-    ) {
+    public function __construct(FlowmailerInterface $client, OptionsInterface $options, ?CacheInterface $cache = null, int $maxRetries = 3)
+    {
         $this->client = $client;
         $this->options = $options;
         $this->maxRetries = $maxRetries;
