@@ -13,13 +13,12 @@ use Flowmailer\API\Model\SubmitMessage;
 
 class SubmitMessageCreatorIterator implements \Iterator
 {
+    private $callback;
     /**
      * @readonly
      * @var \Iterator
      */
     private $innerIterator;
-    private $callback;
-
     public function __construct(\Iterator $innerIterator, callable $callback)
     {
         $this->innerIterator = $innerIterator;

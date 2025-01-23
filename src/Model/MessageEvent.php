@@ -31,7 +31,8 @@ class MessageEvent implements ModelInterface
 
     /**
      * Event data.
-     * @var mixed[]|null
+     *
+     * @var array<int,mixed>|null
      */
     private $extraData;
 
@@ -68,7 +69,7 @@ class MessageEvent implements ModelInterface
      *
      *  Only filled for the `GET /{account_id}/message_events` api call when the parameter `addmessagetags` is `true`
      *
-     * @var string[]|null
+     * @var array<int,string>|null
      */
     private $messageTags;
 
@@ -116,7 +117,10 @@ class MessageEvent implements ModelInterface
      */
     private $subType;
 
-    /** Custom event type */
+    /**
+     * Custom event type.
+     * @var string|null
+     */
     private $tag;
 
     /**
@@ -354,14 +358,14 @@ class MessageEvent implements ModelInterface
         return $this->subType;
     }
 
-    public function setTag($tag = null): self
+    public function setTag(?string $tag = null): self
     {
         $this->tag = $tag;
 
         return $this;
     }
 
-    public function getTag()
+    public function getTag(): ?string
     {
         return $this->tag;
     }

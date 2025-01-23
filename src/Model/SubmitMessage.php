@@ -143,7 +143,7 @@ class SubmitMessage implements ModelInterface
     /**
      * Tags.
      *
-     * @var string[]|null
+     * @var array<int,string>|null
      */
     private $tags;
 
@@ -183,7 +183,6 @@ class SubmitMessage implements ModelInterface
     public function setDeliveryNotificationType($deliveryNotificationType = null): self
     {
         $this->deliveryNotificationType = $deliveryNotificationType;
-
         return $this;
     }
 

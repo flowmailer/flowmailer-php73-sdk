@@ -15,7 +15,7 @@ namespace Flowmailer\API\Model;
 class Error implements ModelInterface
 {
     /**
-     * @var mixed[]|null
+     * @var array<int,mixed>|null
      */
     private $arguments;
 

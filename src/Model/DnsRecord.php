@@ -23,7 +23,7 @@ class DnsRecord implements ModelInterface
      *
      *  Only filled when DNS records are validated.
      *
-     * @var string[]|null
+     * @var array<int,string>|null
      */
     private $errorMessages;
 
@@ -60,9 +60,13 @@ class DnsRecord implements ModelInterface
      *
      *  Only filled when DNS records are validated.
      *
-     * @var string[]|null
+     * @var array<int,string>|null
      */
     private $warningMessages;
+
+    /**
+     * @var array<int,string>|null
+     */
     private $warnings;
 
     public function setErrorMessages(?array $errorMessages = null): self
@@ -143,14 +147,14 @@ class DnsRecord implements ModelInterface
         return $this->warningMessages;
     }
 
-    public function setWarnings($warnings = null): self
+    public function setWarnings(?array $warnings = null): self
     {
         $this->warnings = $warnings;
 
         return $this;
     }
 
-    public function getWarnings()
+    public function getWarnings(): ?array
     {
         return $this->warnings;
     }

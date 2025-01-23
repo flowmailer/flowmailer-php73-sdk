@@ -1325,7 +1325,6 @@ abstract class Endpoints
             'daterange' => $daterange,
             'interval'  => $interval,
         ];
-
         return $this->createRequest('GET', sprintf('/%1$s/flows/%2$s/stats', $this->getOptions()->getAccountId(), $flowId), null, $matrices, [], []);
     }
 
